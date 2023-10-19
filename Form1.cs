@@ -16,13 +16,13 @@ namespace GaussJordanSolver
         private void BindViewModelToUI()
         {
             FillMatrixTable(matrixTable, viewModel.Matrix);
-            resultTextBox.DataBindings.Add("Text", viewModel, "ResultText", false, DataSourceUpdateMode.OnPropertyChanged);
+            resultRichTextBox.DataBindings.Add("Text", viewModel, "ResultText", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private static void FillMatrixTable(TableLayoutPanel table, BindingList<BindingList<double>> matrix)
         {
             table.Controls.Clear();
-            
+
             for (int i = 0; i < matrix.Count; i++)
             {
                 for (int j = 0; j < matrix[i].Count; j++)
@@ -82,6 +82,11 @@ namespace GaussJordanSolver
                 string filePath = saveFileDialog.FileName;
                 viewModel.SaveResultToFile(filePath);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

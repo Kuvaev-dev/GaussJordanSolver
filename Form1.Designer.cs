@@ -28,22 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            resultTextBox = new TextBox();
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
             label2 = new Label();
             matrixTable = new TableLayoutPanel();
             groupBox1 = new GroupBox();
+            resultRichTextBox = new RichTextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
-            // 
-            // resultTextBox
-            // 
-            resultTextBox.Location = new Point(367, 167);
-            resultTextBox.Name = "resultTextBox";
-            resultTextBox.Size = new Size(308, 23);
-            resultTextBox.TabIndex = 1;
             // 
             // button1
             // 
@@ -112,22 +105,31 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Матриця";
             // 
+            // resultRichTextBox
+            // 
+            resultRichTextBox.Location = new Point(367, 167);
+            resultRichTextBox.Name = "resultRichTextBox";
+            resultRichTextBox.Size = new Size(305, 70);
+            resultRichTextBox.TabIndex = 9;
+            resultRichTextBox.Text = "";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Thistle;
             ClientSize = new Size(708, 283);
+            Controls.Add(resultRichTextBox);
             Controls.Add(groupBox1);
             Controls.Add(label2);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
-            Controls.Add(resultTextBox);
             MaximizeBox = false;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Gaussian-Jordan Solver";
+            Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -135,12 +137,12 @@
         }
 
         #endregion
-        private TextBox resultTextBox;
         private Button button1;
         private Button button2;
         private Button button3;
         private Label label2;
         private TableLayoutPanel matrixTable;
         private GroupBox groupBox1;
+        private RichTextBox resultRichTextBox;
     }
 }
