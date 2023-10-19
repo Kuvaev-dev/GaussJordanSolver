@@ -4,10 +4,13 @@ namespace GaussJordanSolver
 {
     public class MatrixViewModel : INotifyPropertyChanged
     {
-        private List<List<double>>? matrix;
-        private string? resultText;
+        private List<List<double>>? matrix; // Матриця, яка використовується для обчислень
+        private string? resultText; // Рядок для відображення результатів на формі
 
+        // Властивість для відображення матриці на формі
         public BindingList<BindingList<double>> Matrix { get; } = new BindingList<BindingList<double>>();
+
+        // Властивість для відображення результатів на формі
         public string ResultText
         {
             get => resultText;
@@ -23,43 +26,46 @@ namespace GaussJordanSolver
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        // Метод для завантаження матриці з текстового файлу
         public void LoadMatrixFromFile(string filePath)
         {
             try
             {
-                List<List<double>>? newMatrix = new();
-                string[]? lines = File.ReadAllLines(filePath);
+                List<List<double>>? newMatrix = new(); // Створюємо нову матрицю
+
+                string[]? lines = File.ReadAllLines(filePath); // Зчитуємо рядки з файлу
 
                 foreach (var line in lines)
                 {
-                    List<double>? row = new List<double>();
-                    string[]? values = line.Split(' ');
+                    List<double>? row = new(); // Створюємо новий рядок матриці
+                    string[]? values = line.Split(' '); // Розділяємо рядок на значення
 
                     foreach (var value in values)
                     {
-                        if (double.TryParse(value, out double parsedValue))
+                        if (double.TryParse(value, out double parsedValue)) // Спроба перетворення рядкового значення в число
                         {
-                            row.Add(parsedValue);
+                            row.Add(parsedValue); // Додаємо число до рядка
                         }
                         else
                         {
-                            ResultText = "Невірний формат даних у файлі.";
+                            ResultText = "Невірний формат даних у файлі."; // Повідомлення про помилку
                             return;
                         }
                     }
 
-                    newMatrix.Add(row);
+                    newMatrix.Add(row); // Додаємо рядок до матриці
                 }
 
-                matrix = newMatrix;
-                UpdateMatrixBinding();
+                matrix = newMatrix; // Зберігаємо нову матрицю
+                UpdateMatrixBinding(); // Оновлюємо відображення матриці на формі
             }
             catch (Exception ex)
             {
-                ResultText = "Помилка при зчитуванні файлу: " + ex.Message;
+                ResultText = "Помилка при зчитуванні файлу: " + ex.Message; // Повідомлення про помилку
             }
         }
 
+        // Метод для розв'язання системи лінійних рівнянь методом Гаусса-Жордана
         public void SolveMatrix()
         {
             if (matrix == null || matrix.Count == 0)
@@ -68,9 +74,10 @@ namespace GaussJordanSolver
                 return;
             }
 
-            int? rowCount = matrix.Count;
-            int colCount = matrix[0].Count;
+            int? rowCount = matrix.Count; // Кількість рядків матриці
+            int colCount = matrix[0].Count; // Кількість стовпців матриці
 
+            // Проходимося по матриці для знаходження розв'язку
             for (int row = 0; row < rowCount; row++)
             {
                 if (matrix[row][row] == 0)
@@ -92,6 +99,7 @@ namespace GaussJordanSolver
                 }
             }
 
+            // Нормалізація рядків матриці
             for (int i = 0; i < rowCount; i++)
             {
                 double divisor = matrix[i][i];
@@ -103,17 +111,21 @@ namespace GaussJordanSolver
 
             ResultText = "Розв'язок системи:\n";
 
+            // Формування рядку з розв'язками
             for (int i = 0; i < rowCount; i++)
             {
                 ResultText += "X" + (i + 1) + " = " + matrix[i][colCount - 1] + "\n";
             }
         }
 
+        // Метод для збереження результату в текстовий файл
         public void SaveResultToFile(string filePath)
         {
             try
             {
                 using StreamWriter? writer = new(filePath);
+
+                // Запис матриці в файл
                 foreach (var row in matrix)
                 {
                     writer.WriteLine(string.Join(" ", row));
@@ -121,15 +133,11 @@ namespace GaussJordanSolver
             }
             catch (Exception ex)
             {
-                ResultText = "Помилка при збереженні результату: " + ex.Message;
+                ResultText = "Помилка при збереженні результату: " + ex.Message; // Повідомлення про помилку
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        // Метод для оновлення відображення матриці на формі
         private void UpdateMatrixBinding()
         {
             Matrix.Clear();
@@ -141,6 +149,12 @@ namespace GaussJordanSolver
                     Matrix.Add(new BindingList<double>(row));
                 }
             }
+        }
+
+        // Метод для сповіщення про зміни властивостей
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
