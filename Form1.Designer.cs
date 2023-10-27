@@ -35,6 +35,7 @@
             groupBox1 = new GroupBox();
             resultRichTextBox = new RichTextBox();
             groupBox2 = new GroupBox();
+            button4 = new Button();
             groupBox3 = new GroupBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -43,7 +44,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(6, 80);
+            button1.Location = new Point(6, 19);
             button1.Name = "button1";
             button1.Size = new Size(195, 23);
             button1.TabIndex = 2;
@@ -53,7 +54,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(6, 51);
+            button2.Location = new Point(6, 48);
             button2.Name = "button2";
             button2.Size = new Size(195, 23);
             button2.TabIndex = 3;
@@ -63,7 +64,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(6, 22);
+            button3.Location = new Point(6, 77);
             button3.Name = "button3";
             button3.Size = new Size(195, 23);
             button3.TabIndex = 4;
@@ -86,7 +87,7 @@
             matrixTable.Name = "matrixTable";
             matrixTable.RowCount = 1;
             matrixTable.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            matrixTable.Size = new Size(308, 240);
+            matrixTable.Size = new Size(308, 275);
             matrixTable.TabIndex = 7;
             // 
             // groupBox1
@@ -94,14 +95,14 @@
             groupBox1.Controls.Add(matrixTable);
             groupBox1.Location = new Point(39, 39);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(322, 267);
+            groupBox1.Size = new Size(322, 303);
             groupBox1.TabIndex = 8;
             groupBox1.TabStop = false;
             groupBox1.Text = "Матриця";
             // 
             // resultRichTextBox
             // 
-            resultRichTextBox.Location = new Point(6, 22);
+            resultRichTextBox.Location = new Point(6, 21);
             resultRichTextBox.Name = "resultRichTextBox";
             resultRichTextBox.Size = new Size(293, 120);
             resultRichTextBox.TabIndex = 9;
@@ -109,20 +110,31 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(button4);
             groupBox2.Controls.Add(button3);
-            groupBox2.Controls.Add(button2);
             groupBox2.Controls.Add(button1);
+            groupBox2.Controls.Add(button2);
             groupBox2.Location = new Point(367, 39);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(305, 111);
+            groupBox2.Size = new Size(305, 139);
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
             groupBox2.Text = "Операції";
             // 
+            // button4
+            // 
+            button4.Location = new Point(6, 106);
+            button4.Name = "button4";
+            button4.Size = new Size(195, 23);
+            button4.TabIndex = 5;
+            button4.Text = "Очистити результати";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += clearButton_Click;
+            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(resultRichTextBox);
-            groupBox3.Location = new Point(367, 156);
+            groupBox3.Location = new Point(367, 192);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(305, 150);
             groupBox3.TabIndex = 10;
@@ -134,7 +146,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Thistle;
-            ClientSize = new Size(708, 345);
+            ClientSize = new Size(708, 372);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -159,5 +171,6 @@
         private RichTextBox resultRichTextBox;
         private GroupBox groupBox2;
         private GroupBox groupBox3;
+        private Button button4;
     }
 }
