@@ -35,16 +35,19 @@ namespace GaussJordanSolver
                         Name = $"cell_{i}_{j}"
                     };
 
+                    int rowIdx = i;
+                    int colIdx = j;
+
                     cell.Validating += (sender, e) =>
                     {
                         if (!double.TryParse(cell.Text, out double newValue))
                         {
                             e.Cancel = true;
-                            cell.Text = matrix[i][j].ToString();
+                            cell.Text = matrix[rowIdx][colIdx].ToString();
                         }
                         else
                         {
-                            matrix[i][j] = newValue;
+                            matrix[rowIdx][colIdx] = newValue;
                         }
                     };
 
@@ -68,7 +71,11 @@ namespace GaussJordanSolver
             }
         }
 
-        private void solveButton_Click(object sender, EventArgs e) => viewModel.SolveMatrix();
+        private void solveButton_Click(object sender, EventArgs e)
+        {
+            viewModel.SolveMatrix();
+            CheckSolutionStatus();
+        }
 
         private void saveResultButton_Click(object sender, EventArgs e)
         {
@@ -82,6 +89,58 @@ namespace GaussJordanSolver
                 string filePath = saveFileDialog.FileName;
                 viewModel.SaveResultToFile(filePath);
             }
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            viewModel.ClearMatrix();
+            matrixTable.Controls.Clear();
+            resultRichTextBox.Clear();
+        }
+
+        private void CheckSolutionStatus()
+        {
+            if (viewModel.Matrix == null)
+            {
+                resultRichTextBox.Text += "Матриця не існує.\n";
+                return;
+            }
+
+            int rowCount = viewModel.Matrix.Count;
+            int colCount = viewModel.Matrix[0].Count;
+            int lastColIdx = colCount - 1;
+
+            // Перевірка на безліч розв'язків або відсутність розв'язку
+            for (int i = 0; i < rowCount; i++)
+            {
+                bool isZeroRow = true;
+                for (int j = 0; j < colCount - 1; j++)
+                {
+                    if (viewModel.Matrix[i][j] != 0)
+                    {
+                        isZeroRow = false;
+                        break;
+                    }
+                }
+
+                if (isZeroRow && viewModel.Matrix[i][lastColIdx] != 0)
+                {
+                    resultRichTextBox.Text += "Система має безліч розв'язків.\n";
+                    return;
+                }
+            }
+
+            // Перевірка на відсутність розв'язку
+            for (int i = 0; i < rowCount; i++)
+            {
+                if (viewModel.Matrix[i][i] != 1)
+                {
+                    resultRichTextBox.Text += "Система не має розв'язку.\n";
+                    return;
+                }
+            }
+
+            resultRichTextBox.Text += "Система має єдиний розв'язок.\n";
         }
 
         private void Form1_Load(object sender, EventArgs e)
