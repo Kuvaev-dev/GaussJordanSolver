@@ -76,6 +76,7 @@
             // 
             matrixTable.AutoScroll = true;
             matrixTable.AutoSize = true;
+            matrixTable.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             matrixTable.BackColor = Color.White;
             matrixTable.ColumnCount = 4;
             matrixTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
@@ -87,7 +88,7 @@
             matrixTable.Name = "matrixTable";
             matrixTable.RowCount = 1;
             matrixTable.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            matrixTable.Size = new Size(308, 275);
+            matrixTable.Size = new Size(0, 0);
             matrixTable.TabIndex = 7;
             // 
             // groupBox1

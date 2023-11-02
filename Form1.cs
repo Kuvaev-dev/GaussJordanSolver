@@ -23,11 +23,18 @@ namespace GaussJordanSolver
         {
             table.Controls.Clear();
 
-            for (int i = 0; i < matrix.Count; i++)
+            int rowCount = matrix.Count;
+            int colCount = rowCount > 0 ? matrix[0].Count : 0;
+
+            table.RowCount = rowCount;
+            table.ColumnCount = colCount;
+
+            for (int i = 0; i < rowCount; i++)
             {
-                for (int j = 0; j < matrix[i].Count; j++)
+                table.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Додати авто-розмір для кожного рядка
+                for (int j = 0; j < colCount; j++)
                 {
-                    TextBox? cell = new()
+                    TextBox cell = new TextBox
                     {
                         Text = matrix[i][j].ToString(),
                         Width = 50,
