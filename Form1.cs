@@ -34,7 +34,7 @@ namespace GaussJordanSolver
                 table.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Додати авто-розмір для кожного рядка
                 for (int j = 0; j < colCount; j++)
                 {
-                    TextBox cell = new TextBox
+                    TextBox cell = new()
                     {
                         Text = matrix[i][j].ToString(),
                         Width = 50,
@@ -88,13 +88,14 @@ namespace GaussJordanSolver
         {
             SaveFileDialog saveFileDialog = new()
             {
-                Filter = "Текстові файли (*.txt)|*.txt"
+                Filter = "Текстові файли (*.txt)|*.txt",
+                Title = "Зберегти матрицю та розв'язання",
             };
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = saveFileDialog.FileName;
-                viewModel.SaveResultToFile(filePath);
+                SaveSolutionToFile(filePath);
             }
         }
 
@@ -148,6 +149,36 @@ namespace GaussJordanSolver
             }
 
             resultRichTextBox.Text += "Система має єдиний розв'язок.\n";
+        }
+
+        private void SaveSolutionToFile(string filePath)
+        {
+            try
+            {
+                using StreamWriter writer = new(filePath);
+                writer.WriteLine("Оригінальна матриця:");
+
+                if (viewModel.OriginalMatrix != null)
+                {
+                    foreach (var row in viewModel.OriginalMatrix)
+                    {
+                        writer.WriteLine(string.Join(" ", row.Select(d => d.ToString("G17"))));
+                    }
+                }
+
+                writer.WriteLine("Розв'язання:");
+
+                if (!string.IsNullOrEmpty(viewModel.ResultText))
+                {
+                    writer.WriteLine(viewModel.ResultText);
+                }
+
+                resultRichTextBox.Text = "Матрицю та розв'язок успішно збережено у файл.";
+            }
+            catch (Exception ex)
+            {
+                resultRichTextBox.Text = "Помилка при збереженні файлу: " + ex.Message + "\n";
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)

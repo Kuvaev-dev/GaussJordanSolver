@@ -32,6 +32,11 @@ namespace GaussJordanSolver
             }
         }
 
+        /// <summary>
+        /// Поле для запису оригінальної матриці до файлу.
+        /// </summary>
+        public List<List<double>>? OriginalMatrix { get => originalMatrix; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
